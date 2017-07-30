@@ -40,10 +40,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.google.zxing.activity.CaptureActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+
 
     </application>
 
