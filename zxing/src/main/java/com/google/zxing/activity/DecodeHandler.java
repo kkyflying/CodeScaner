@@ -27,10 +27,10 @@ import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.MultiFormatReader;
 import com.google.zxing.PlanarYUVLuminanceSource;
+import com.google.zxing.R;
 import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
-import com.kky.codescaner.R;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Map;
@@ -54,14 +54,12 @@ final class DecodeHandler extends Handler {
     if (!running) {
       return;
     }
-    switch (message.what) {
-      case R.id.decode:
-        decode((byte[]) message.obj, message.arg1, message.arg2);
-        break;
-      case R.id.quit:
-        running = false;
-        Looper.myLooper().quit();
-        break;
+    if (message.what == R.id.decode) {
+      decode((byte[]) message.obj, message.arg1, message.arg2);
+
+    } else if (message.what == R.id.quit) {
+      running = false;
+      Looper.myLooper().quit();
     }
   }
 
@@ -96,7 +94,7 @@ final class DecodeHandler extends Handler {
       if (handler != null) {
         Message message = Message.obtain(handler, R.id.decode_succeeded, rawResult);
         Bundle bundle = new Bundle();
-        bundleThumbnail(source, bundle);        
+        bundleThumbnail(source, bundle);
         message.setData(bundle);
         message.sendToTarget();
       }
@@ -113,7 +111,7 @@ final class DecodeHandler extends Handler {
     int width = source.getThumbnailWidth();
     int height = source.getThumbnailHeight();
     Bitmap bitmap = Bitmap.createBitmap(pixels, 0, width, width, height, Bitmap.Config.ARGB_8888);
-    ByteArrayOutputStream out = new ByteArrayOutputStream();    
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
     bitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
     bundle.putByteArray(DecodeThread.BARCODE_BITMAP, out.toByteArray());
     bundle.putFloat(DecodeThread.BARCODE_SCALED_FACTOR, (float) width / source.getWidth());

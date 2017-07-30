@@ -1,4 +1,3 @@
 <resources>
     <string name="app_name">CodeScaner</string>
-    <string name="scan_qrcode_tips">请将二维码放入框内，即可自动扫描</string>
 </resources>

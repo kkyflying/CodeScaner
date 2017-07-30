@@ -28,9 +28,9 @@ import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.google.zxing.R;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.camera.CameraManager;
-import com.kky.codescaner.R;
 
 import java.util.ArrayList;
 import java.util.List;

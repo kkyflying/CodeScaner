@@ -27,7 +27,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 
-import com.kky.codescaner.R;
+import com.google.zxing.R;
 
 import java.io.Closeable;
 import java.io.IOException;
