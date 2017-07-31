@@ -24,9 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     public static final int REQ_QRCODE = 0x5152;
-    public static final String KEY_RESULT = "result";
 
-    public static final String URL = "http://app.bilibili.com/images/down.html";
 
     public static final String t = "我可能复习了假书";
 
@@ -60,16 +58,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == REQ_QRCODE && data != null) {
-            byte[] result = data.getByteArrayExtra(KEY_RESULT);
+            byte[] result = data.getByteArrayExtra(CaptureActivity.KEY_RESULT);
             if (result == null || result.length == 0) return;
             String payCode = new String(result);
-            if (TextUtils.isDigitsOnly(payCode)) {
-                Log.i(TAG, "onActivityResult:1 " + payCode);
-                tvReuslt.setText(payCode);
-            } else {
-                Log.i(TAG, "onActivityResult:2 " + payCode);
-                tvReuslt.setText(payCode);
-            }
+            Log.i(TAG, "onActivityResult:1 " + payCode);
+            tvReuslt.setText(payCode);
         }
     }
 

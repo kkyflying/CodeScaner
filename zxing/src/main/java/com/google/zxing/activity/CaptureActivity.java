@@ -63,6 +63,8 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
 
+    public static final String KEY_RESULT = "result";
+
     private static final boolean DEBUG = false;
 
     private CameraManager cameraManager;
@@ -295,7 +297,7 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
         } else {
             Intent resultIntent = new Intent();
             Bundle bundle = new Bundle();
-            bundle.putByteArray("result", resultString.getBytes());
+            bundle.putByteArray(KEY_RESULT, resultString.getBytes());
             // 不能使用Intent传递大于40kb的bitmap，可以使用一个单例对象存储这个bitmap
 //            bundle.putParcelable("bitmap", barcode);
             resultIntent.putExtras(bundle);
