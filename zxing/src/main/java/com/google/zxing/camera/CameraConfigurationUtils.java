@@ -313,7 +313,7 @@ public final class CameraConfigurationUtils {
 
     //分辨率比例
     double screenAspectRatio = screenResolution.y / (double) screenResolution.x;
-
+//    double screenAspectRatio = screenResolution.x / (double) screenResolution.y;
     // Remove sizes that are unsuitable
     Iterator<Camera.Size> it = supportedPreviewSizes.iterator();
     while (it.hasNext()) {
@@ -357,9 +357,9 @@ public final class CameraConfigurationUtils {
     if (defaultPreview == null) {
       throw new IllegalStateException("Parameters contained no preview size!");
     }
+//    Point defaultSize = new Point(defaultPreview.width, defaultPreview.height);
     Point defaultSize = new Point(defaultPreview.height, defaultPreview.width);
 //    Log.i(TAG, "defaultPreview " + defaultPreview.width + " " + defaultPreview.height);
-//    Point defaultSize = new Point(1920, 1080);
     Log.i(TAG, "No suitable preview sizes, using default: " + defaultSize);
     return defaultSize;
   }
