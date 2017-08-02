@@ -346,6 +346,13 @@ public final class CameraConfigurationUtils {
     // of the additional computation needed. We're likely to get here on newer Android 4+ devices, where
     // the CPU is much more powerful.
     if (!supportedPreviewSizes.isEmpty()) {
+      for (int i = 0;i<supportedPreviewSizes.size();i++){
+        Camera.Size largestPreview = supportedPreviewSizes.get(i);
+        if (largestPreview.width == screenResolution.y && largestPreview.height == screenResolution.x){
+          Log.i(TAG, "Using same suitable preview size: " + largestPreview);
+          return new Point(largestPreview.width, largestPreview.height);
+        }
+      }
       Camera.Size largestPreview = supportedPreviewSizes.get(0);
       Point largestSize = new Point(largestPreview.width, largestPreview.height);
       Log.i(TAG, "Using largest suitable preview size: " + largestSize);
