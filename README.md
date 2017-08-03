@@ -12,7 +12,7 @@ git clone https://github.com/kkyflying/CodeScaner.git
 ```
 进入到AS , File->New->Import Module ,选择刚clone完成的目录下,导入zxing
 
-##如何使用
+## 如何使用
  创建二维码
 ```
  iamge.setImageBitmap(EncodingHandler.createQRCode(url,500));
