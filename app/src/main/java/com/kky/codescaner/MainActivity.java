@@ -5,13 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
+import com.google.zxing.WriterException;
 import com.google.zxing.activity.CaptureActivity;
 import com.google.zxing.encoding.EncodingHandler;
 
@@ -23,17 +22,19 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    public static final int REQ_QRCODE = 0x5152;
+    public static final int REQ_QRCODE = 0x1111;
 
 
-    public static final String t = "我可能复习了假书";
+    public static final String url= "https://github.com/kkyflying/CodeScaner";
 
     @BindView(R.id.btnScaner)
     Button btnScaner;
     @BindView(R.id.tvReuslt)
     TextView tvReuslt;
-    @BindView(R.id.iamge)
-    ImageView iamge;
+    @BindView(R.id.iamge1)
+    ImageView iamge1;
+    @BindView(R.id.iamge2)
+    ImageView iamge2;
 
 
     @Override
@@ -44,9 +45,16 @@ public class MainActivity extends AppCompatActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.k);
-            iamge.setImageBitmap(EncodingHandler.createQRCode(t,800,800, bitmap));
+        iamge1.setImageBitmap(EncodingHandler.createQRCode(url, 500, 500, bitmap));
+
+        try {
+            iamge2.setImageBitmap(EncodingHandler.createQRCode(url,500));
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -61,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
             byte[] result = data.getByteArrayExtra(CaptureActivity.KEY_RESULT);
             if (result == null || result.length == 0) return;
             String payCode = new String(result);
-            Log.i(TAG, "onActivityResult:1 " + payCode);
             tvReuslt.setText(payCode);
         }
     }

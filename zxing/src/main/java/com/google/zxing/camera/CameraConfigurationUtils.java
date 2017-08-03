@@ -64,22 +64,22 @@ public final class CameraConfigurationUtils {
     if (autoFocus) {
       if (safeMode || disableContinuous) {
         focusMode = findSettableValue("focus mode",
-                                       supportedFocusModes,
-                                       Camera.Parameters.FOCUS_MODE_AUTO);
+                supportedFocusModes,
+                Camera.Parameters.FOCUS_MODE_AUTO);
       } else {
         focusMode = findSettableValue("focus mode",
-                                      supportedFocusModes,
-                                      Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE,
-                                      Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO,
-                                      Camera.Parameters.FOCUS_MODE_AUTO);
+                supportedFocusModes,
+                Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE,
+                Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO,
+                Camera.Parameters.FOCUS_MODE_AUTO);
       }
     }
     // Maybe selected auto-focus but not available, so fall through here:
     if (!safeMode && focusMode == null) {
       focusMode = findSettableValue("focus mode",
-                                    supportedFocusModes,
-                                    Camera.Parameters.FOCUS_MODE_MACRO,
-                                    Camera.Parameters.FOCUS_MODE_EDOF);
+              supportedFocusModes,
+              Camera.Parameters.FOCUS_MODE_MACRO,
+              Camera.Parameters.FOCUS_MODE_EDOF);
     }
     if (focusMode != null) {
       if (focusMode.equals(parameters.getFocusMode())) {
@@ -95,13 +95,13 @@ public final class CameraConfigurationUtils {
     String flashMode;
     if (on) {
       flashMode = findSettableValue("flash mode",
-                                    supportedFlashModes,
-                                    Camera.Parameters.FLASH_MODE_TORCH,
-                                    Camera.Parameters.FLASH_MODE_ON);
+              supportedFlashModes,
+              Camera.Parameters.FLASH_MODE_TORCH,
+              Camera.Parameters.FLASH_MODE_ON);
     } else {
       flashMode = findSettableValue("flash mode",
-                                    supportedFlashModes,
-                                    Camera.Parameters.FLASH_MODE_OFF);
+              supportedFlashModes,
+              Camera.Parameters.FLASH_MODE_OFF);
     }
     if (flashMode != null) {
       if (flashMode.equals(parameters.getFlashMode())) {
@@ -162,7 +162,7 @@ public final class CameraConfigurationUtils {
         } else {
           Log.i(TAG, "Setting FPS range to " + Arrays.toString(suitableFPSRange));
           parameters.setPreviewFpsRange(suitableFPSRange[Camera.Parameters.PREVIEW_FPS_MIN_INDEX],
-                                        suitableFPSRange[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]);
+                  suitableFPSRange[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]);
         }
       }
     }
@@ -192,7 +192,7 @@ public final class CameraConfigurationUtils {
 
   private static List<Camera.Area> buildMiddleArea(int areaPer1000) {
     return Collections.singletonList(
-        new Camera.Area(new Rect(-areaPer1000, -areaPer1000, areaPer1000, areaPer1000), 1));
+            new Camera.Area(new Rect(-areaPer1000, -areaPer1000, areaPer1000, areaPer1000), 1));
   }
 
   public static void setVideoStabilization(Camera.Parameters parameters) {
@@ -214,8 +214,8 @@ public final class CameraConfigurationUtils {
       return;
     }
     String sceneMode = findSettableValue("scene mode",
-                                         parameters.getSupportedSceneModes(),
-                                         Camera.Parameters.SCENE_MODE_BARCODE);
+            parameters.getSupportedSceneModes(),
+            Camera.Parameters.SCENE_MODE_BARCODE);
     if (sceneMode != null) {
       parameters.setSceneMode(sceneMode);
     }
@@ -266,8 +266,8 @@ public final class CameraConfigurationUtils {
       return;
     }
     String colorMode = findSettableValue("color effect",
-                                         parameters.getSupportedColorEffects(),
-                                         Camera.Parameters.EFFECT_NEGATIVE);
+            parameters.getSupportedColorEffects(),
+            Camera.Parameters.EFFECT_NEGATIVE);
     if (colorMode != null) {
       parameters.setColorEffect(colorMode);
     }
@@ -306,14 +306,14 @@ public final class CameraConfigurationUtils {
       StringBuilder previewSizesString = new StringBuilder();
       for (Camera.Size supportedPreviewSize : supportedPreviewSizes) {
         previewSizesString.append(supportedPreviewSize.width).append('x')
-            .append(supportedPreviewSize.height).append(' ');
+                .append(supportedPreviewSize.height).append(' ');
       }
       Log.i(TAG, "Supported preview sizes: " + previewSizesString);
     }
 
     //分辨率比例
     double screenAspectRatio = screenResolution.y / (double) screenResolution.x;
-
+//    double screenAspectRatio = screenResolution.x / (double) screenResolution.y;
     // Remove sizes that are unsuitable
     Iterator<Camera.Size> it = supportedPreviewSizes.iterator();
     while (it.hasNext()) {
@@ -349,7 +349,7 @@ public final class CameraConfigurationUtils {
       for (int i = 0;i<supportedPreviewSizes.size();i++){
         Camera.Size largestPreview = supportedPreviewSizes.get(i);
         if (largestPreview.width == screenResolution.y && largestPreview.height == screenResolution.x){
-          Log.i(TAG, "Using same suitable preview size: " + largestPreview);
+          Log.i(TAG, "Using same suitable preview size: " + largestPreview.width + " " + largestPreview.height);
           return new Point(largestPreview.width, largestPreview.height);
         }
       }
@@ -364,9 +364,9 @@ public final class CameraConfigurationUtils {
     if (defaultPreview == null) {
       throw new IllegalStateException("Parameters contained no preview size!");
     }
+//    Point defaultSize = new Point(defaultPreview.width, defaultPreview.height);
     Point defaultSize = new Point(defaultPreview.height, defaultPreview.width);
 //    Log.i(TAG, "defaultPreview " + defaultPreview.width + " " + defaultPreview.height);
-//    Point defaultSize = new Point(1920, 1080);
     Log.i(TAG, "No suitable preview sizes, using default: " + defaultSize);
     return defaultSize;
   }

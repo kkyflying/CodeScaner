@@ -43,7 +43,7 @@ public final class CameraManager {
     private static final boolean DEBUG = false;
 
     private static final int MIN_FRAME_WIDTH = 240;
-    private static final int MAX_FRAME_WIDTH = 675; // = 5/8 * 1920
+    private static final int MAX_FRAME_WIDTH = 675;
 
     private static final int MIN_FRAME_HEIGHT = 240;
     private static final int MAX_FRAME_HEIGHT = 675; // = 5/8 * 1080
