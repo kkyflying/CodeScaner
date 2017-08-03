@@ -5,7 +5,7 @@
 -  实现Android的扫码和创建二维码的功能.
 
 ## Preview
-
+![](https://github.com/kkyflying/CodeScaner/blob/master/assets/preview.gif) 
 ## 下载使用
 ```
 git clone https://github.com/kkyflying/CodeScaner.git
