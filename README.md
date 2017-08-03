@@ -12,7 +12,20 @@ git clone https://github.com/kkyflying/CodeScaner.git
 ```
 进入到AS , File->New->Import Module ,选择刚clone完成的目录下,导入zxing
 
-
+##如何使用
+ 创建二维码
+```
+ iamge.setImageBitmap(EncodingHandler.createQRCode(url,500));
+```
+创建有logo的二维码
+```
+ Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.k);
+ iamge.setImageBitmap(EncodingHandler.createQRCode(url, 500, 500, bitmap));
+```
+启动扫码
+```
+ startActivityForResult(new Intent(MainActivity.this, CaptureActivity.class), REQ_QRCODE);
+```
 
 ## 备注
 - 在这个库中,已经添加上权限等之类的注册,无需在原本的项目再次添加.
