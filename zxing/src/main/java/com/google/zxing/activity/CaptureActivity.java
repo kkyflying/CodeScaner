@@ -65,7 +65,7 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
 
     public static final String KEY_RESULT = "result";
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private CameraManager cameraManager;
     private CaptureActivityHandler handler;
@@ -312,7 +312,7 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-//                    CaptureActivity.this.finish();
+                    CaptureActivity.this.finish();
                 }
             }, 3000);
         } else {
