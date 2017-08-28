@@ -44,8 +44,19 @@ final class PreviewCallback implements Camera.PreviewCallback {
     Point cameraResolution = configManager.getCameraResolution();
     Handler thePreviewHandler = previewHandler;
     if (cameraResolution != null && thePreviewHandler != null) {
-      Message message = thePreviewHandler.obtainMessage(previewMessage, cameraResolution.x,
-          cameraResolution.y, data);
+//      Message message = thePreviewHandler.obtainMessage(previewMessage, cameraResolution.x,
+//          cameraResolution.y, data);
+      Point screenResolution = configManager.getScreenResolution();
+      Message message;
+      if (screenResolution.x < screenResolution.y){
+        // portrait
+        message = thePreviewHandler.obtainMessage(previewMessage, cameraResolution.y,
+                cameraResolution.x, data);
+      } else {
+        // landscape
+        message = thePreviewHandler.obtainMessage(previewMessage, cameraResolution.x,
+                cameraResolution.y, data);
+      }
       message.sendToTarget();
       previewHandler = null;
     } else {

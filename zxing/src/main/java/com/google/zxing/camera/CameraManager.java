@@ -279,37 +279,24 @@ public final class CameraManager {
                 // Called early, before init even finished
                 return null;
             }
-            boolean isSameOrientation = (cameraResolution.x < cameraResolution.y) && (screenResolution.x < screenResolution.y);
-            if (isSameOrientation) {
-                rect.left = rect.left * cameraResolution.x / screenResolution.x;
-                rect.right = rect.right * cameraResolution.x / screenResolution.x;
-                rect.top = rect.top * cameraResolution.y / screenResolution.y;
-                rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
-            } else {
+//      rect.left = rect.left * cameraResolution.x / screenResolution.x;
+//      rect.right = rect.right * cameraResolution.x / screenResolution.x;
+//      rect.top = rect.top * cameraResolution.y / screenResolution.y;
+//      rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
+            if(screenResolution.x < screenResolution.y){
+                // portrait
                 rect.left = rect.left * cameraResolution.y / screenResolution.x;
                 rect.right = rect.right * cameraResolution.y / screenResolution.x;
                 rect.top = rect.top * cameraResolution.x / screenResolution.y;
                 rect.bottom = rect.bottom * cameraResolution.x / screenResolution.y;
-
-                int tmp = rect.left;
-                rect.left = rect.top;
-                rect.top = tmp;
-                tmp = rect.right;
-                rect.right = rect.bottom;
-                rect.bottom = tmp;
+            } else {
+                // landscape
+                rect.left = rect.left * cameraResolution.x / screenResolution.x;
+                rect.right = rect.right * cameraResolution.x / screenResolution.x;
+                rect.top = rect.top * cameraResolution.y / screenResolution.y;
+                rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
             }
-
-            // get bigger preview image data
-            int dw = rect.width() / 20;
-            int dh = rect.height() / 20;
-            rect.left -= dw;
-            rect.right += dw;
-            rect.top -= dh;
-            rect.bottom += dh;
-
             framingRectInPreview = rect;
-            if (DEBUG)
-                Log.d(TAG, "Calculated preview framing rect: " + rect + ", w: " + rect.width() + ", h: " + rect.height());
         }
         return framingRectInPreview;
     }

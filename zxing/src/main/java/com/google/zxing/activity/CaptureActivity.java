@@ -65,7 +65,7 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
 
     public static final String KEY_RESULT = "result";
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private CameraManager cameraManager;
     private CaptureActivityHandler handler;
@@ -143,6 +143,7 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
 
         decodeFormats = EnumSet.noneOf(BarcodeFormat.class);
         decodeFormats.addAll(DecodeFormatManager.QR_CODE_FORMATS);
+        decodeFormats.addAll(DecodeFormatManager.ONE_D_FORMATS);
         characterSet = null;
 
         SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
@@ -311,7 +312,7 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    CaptureActivity.this.finish();
+//                    CaptureActivity.this.finish();
                 }
             }, 3000);
         } else {
