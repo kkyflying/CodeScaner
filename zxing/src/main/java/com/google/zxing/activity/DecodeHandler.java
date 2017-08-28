@@ -17,6 +17,7 @@
 package com.google.zxing.activity;
 
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -125,5 +126,29 @@ final class DecodeHandler extends Handler {
     bundle.putByteArray(DecodeThread.BARCODE_BITMAP, out.toByteArray());
     bundle.putFloat(DecodeThread.BARCODE_SCALED_FACTOR, (float) width / source.getWidth());
   }
+
+//  /**
+//   * 选择变换
+//   *
+//   * @param origin 原图
+//   * @param alpha  旋转角度，可正可负
+//   * @return 旋转后的图片
+//   */
+//  private static Bitmap rotateBitmap(Bitmap origin, float alpha) {
+//    if (origin == null) {
+//      return null;
+//    }
+//    int width = origin.getWidth();
+//    int height = origin.getHeight();
+//    Matrix matrix = new Matrix();
+//    matrix.setRotate(alpha);
+//    // 围绕原地进行旋转
+//    Bitmap newBM = Bitmap.createBitmap(origin, 0, 0, width, height, matrix, false);
+//    if (newBM.equals(origin)) {
+//      return newBM;
+//    }
+//    origin.recycle();
+//    return newBM;
+//  }
 
 }
