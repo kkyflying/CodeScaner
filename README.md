@@ -2,8 +2,9 @@
 
 ## 介绍
 -  这是一个基于[zxing](https://github.com/zxing/zxing) 3.3.0修改后集成的库,除去一些没有使用上的文件,使这个库轻量易用.
--  实现Android的扫码和创建二维码的功能.
-
+-  最新库的版本号为1.1
+- 实现Android的扫码和创建二维码的功能.
+- 实现扫描条形码
 ## Preview
 ![](https://github.com/kkyflying/CodeScaner/blob/master/assets/preview.gif) 
 ## 下载使用
