@@ -30,7 +30,7 @@ git clone https://github.com/kkyflying/CodeScaner.git
 
 ## 备注
 - 在这个库中,已经添加上权限等之类的注册,无需在原本的项目再次添加.
-- 修改解析 ： http://www.jianshu.com/p/804f1777955d
+- 参考文章 http://www.jianshu.com/p/804f1777955d
 
 
 
