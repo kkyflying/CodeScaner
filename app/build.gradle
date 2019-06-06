@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.kky.codescaner"
@@ -26,7 +26,7 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
 
-    implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
