@@ -7,9 +7,9 @@
 - 实现扫描条形码
 ## 下载使用
 
-** 1.**[下载apk](https://github.com/kkyflying/CodeScaner/releases) 
+1. [下载apk](https://github.com/kkyflying/CodeScaner/releases) 
 
-**2.**下载编译
+2. 下载编译
 ```
 git clone https://github.com/kkyflying/CodeScaner.git
 ```
