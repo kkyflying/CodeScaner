@@ -5,28 +5,25 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.zxing.WriterException;
 import com.google.zxing.activity.CaptureActivity;
-import com.google.zxing.encoding.EncodingHandler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -34,12 +31,10 @@ public class MainActivity extends AppCompatActivity {
     Button btnScaner;
     @BindView(R.id.tvReuslt)
     TextView tvReuslt;
-    @BindView(R.id.iamge1)
-    ImageView iamge1;
-    @BindView(R.id.iamge2)
-    ImageView iamge2;
     @BindView(R.id.btnCopy)
     Button btnCopy;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private ClipboardManager mClipboardManager;
 
@@ -53,14 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         mClipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.k);
-        iamge1.setImageBitmap(EncodingHandler.createQRCode(Constant.URL_HOME, 500, 500, bitmap));
-        try {
-            iamge2.setImageBitmap(EncodingHandler.createQRCode(Constant.URL_BOLG,500));
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
+        toolbar.inflateMenu(R.menu.activity_main_meun);
+        setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
     }
 
 
@@ -73,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     public void onViewClickedCopy() {
         ClipData clipData = ClipData.newPlainText("code", tvReuslt.getText());
         mClipboardManager.setPrimaryClip(clipData);
-        Toast.makeText(this,"copy ~ ",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "copy ~ ", Toast.LENGTH_SHORT).show();
     }
 
     private void getPermission() {
@@ -94,18 +84,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(new Intent(MainActivity.this, CaptureActivity.class), Constant.REQ_QRCODE);
             } else {
                 // Permission Denied
-                Toast.makeText(MainActivity.this,"Permission Denied",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == Constant.REQ_QRCODE && data != null) {
             byte[] result = data.getByteArrayExtra(CaptureActivity.KEY_RESULT);
-            if (result == null || result.length == 0){
+            if (result == null || result.length == 0) {
                 tvReuslt.setText("");
                 btnCopy.setVisibility(View.GONE);
                 return;
@@ -113,11 +102,28 @@ public class MainActivity extends AppCompatActivity {
             String payCode = new String(result);
             tvReuslt.setText(payCode);
             btnCopy.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             tvReuslt.setText("");
             btnCopy.setVisibility(View.GONE);
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_meun,menu);
+        return true;
+    }
+
+    private Toolbar.OnMenuItemClickListener onMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.about:
+                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                    break;
+            }
+            return false;
+        }
+    };
 
 }
