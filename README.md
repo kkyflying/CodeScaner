@@ -5,9 +5,11 @@
 -  最新库的版本号为1.1
 - 实现Android的扫码和创建二维码的功能.
 - 实现扫描条形码
-## Preview
-![](https://github.com/kkyflying/CodeScaner/blob/master/assets/preview.gif) 
 ## 下载使用
+
+** 1.**[下载apk](https://github.com/kkyflying/CodeScaner/releases) 
+
+**2.**下载编译
 ```
 git clone https://github.com/kkyflying/CodeScaner.git
 ```
