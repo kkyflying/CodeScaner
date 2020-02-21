@@ -35,6 +35,8 @@ public class AboutActivity extends BaseActivity {
     Button btnOpen;
     @BindView(R.id.btnShare)
     Button btnShare;
+    @BindView(R.id.tvVersion)
+    TextView tvVersion;
 
     private ClipboardManager mClipboardManager;
 
@@ -58,6 +60,7 @@ public class AboutActivity extends BaseActivity {
             e.printStackTrace();
         }
         tvUrl.setText(Constant.URL_HOME);
+        tvVersion.setText("版本号 : " + BuildConfig.VERSION_NAME);
     }
 
     @OnClick(R.id.btnOpen)
