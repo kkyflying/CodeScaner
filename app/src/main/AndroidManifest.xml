@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="LockedOrientationActivity"
     package="com.kky.codescaner">
 
     <!--<uses-permission android:name="android.permission.CAMERA" />-->
     <!--<uses-permission android:name="android.permission.VIBRATE" />-->
-
-
     <!--<uses-feature android:name="android.hardware.camera" />-->
     <!--<uses-feature android:name="android.hardware.camera.autofocus" />-->
+
+    <uses-feature android:name="android.hardware.screen.portrait"/>
 
     <application
         android:allowBackup="false"
@@ -32,6 +34,10 @@
             android:screenOrientation="portrait"
             />
 
+        <activity
+            android:name=".CreateQrcodeActivity"
+            android:screenOrientation="portrait"
+            />
 
     </application>
 

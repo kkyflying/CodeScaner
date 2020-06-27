@@ -27,6 +27,8 @@ public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    @BindView(R.id.btnCreateQrcode)
+    Button btnCreateQrcode;
     @BindView(R.id.btnScaner)
     Button btnScaner;
     @BindView(R.id.tvReuslt)
@@ -57,6 +59,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.btnScaner)
     public void onViewClickedScaner() {
         getPermission();
+    }
+
+    @OnClick(R.id.btnCreateQrcode)
+    public void onViewClickedCreateQrcode(){
+        startActivity(new Intent(MainActivity.this,CreateQrcodeActivity.class));
     }
 
     @OnClick(R.id.btnCopy)
