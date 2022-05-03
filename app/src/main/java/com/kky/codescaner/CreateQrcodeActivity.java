@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import com.google.zxing.WriterException;
 import com.google.zxing.encoding.EncodingHandler;
 
+import java.io.UnsupportedEncodingException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -49,10 +51,12 @@ public class CreateQrcodeActivity extends BaseActivity {
 
     @OnClick(R.id.btnCreate)
     public void onViewClicked() {
-        if (!TextUtils.isEmpty(input.getText().toString())){
+        String in = input.getText().toString();
+        if (!TextUtils.isEmpty(in)){
             try {
-                imgQrcode.setImageBitmap(EncodingHandler.createQRCode(input.getText().toString(), 500));
-            } catch (WriterException e) {
+                String contents = new String(in.getBytes("UTF-8"), "ISO-8859-1");
+                imgQrcode.setImageBitmap(EncodingHandler.createQRCode(contents, 500));
+            } catch (WriterException | UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         }
