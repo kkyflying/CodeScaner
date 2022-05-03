@@ -19,13 +19,14 @@ import java.util.Map;
  * @author Ryan Tang
  */
 public final class EncodingHandler {
+
 	private static final int BLACK = 0xff000000;
-	
+	private static final int WITHE = 0xffffffff;
+
 	public static Bitmap createQRCode(String str,int widthAndHeight) throws WriterException {
 		Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
-		BitMatrix matrix = new MultiFormatWriter().encode(str,
-				BarcodeFormat.QR_CODE, widthAndHeight, widthAndHeight);
+		BitMatrix matrix = new MultiFormatWriter().encode(str, BarcodeFormat.QR_CODE, widthAndHeight, widthAndHeight);
 		int width = matrix.getWidth();
 		int height = matrix.getHeight();
 		int[] pixels = new int[width * height];
@@ -37,8 +38,7 @@ public final class EncodingHandler {
 				}
 			}
 		}
-		Bitmap bitmap = Bitmap.createBitmap(width, height,
-				Bitmap.Config.ARGB_8888);
+		Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 		bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
 		return bitmap;
 	}
@@ -70,9 +70,9 @@ public final class EncodingHandler {
 			for (int y = 0; y < heightPix; y++) {
 				for (int x = 0; x < widthPix; x++) {
 					if (bitMatrix.get(x, y)) {
-						pixels[y * widthPix + x] = 0xff000000;
+						pixels[y * widthPix + x] = BLACK;
 					} else {
-						pixels[y * widthPix + x] = 0xffffffff;
+						pixels[y * widthPix + x] = WITHE;
 					}
 				}
 			}
@@ -126,6 +126,53 @@ public final class EncodingHandler {
 			e.getStackTrace();
 		}
 		return bitmap;
+	}
+
+	/**
+	 *
+	 */
+	public static Bitmap createQRCode(String str,int widthAndHeight,int padding) throws Exception {
+		Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
+		hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+		BitMatrix matrix = new MultiFormatWriter().encode(str, BarcodeFormat.QR_CODE, widthAndHeight, widthAndHeight);
+		int width = matrix.getWidth();
+		int height = matrix.getHeight();
+		int[] pixels = new int[width * height];
+
+		int minX=width/2,minY=height/2;
+		int maxX=0,maxY=0;
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				if (matrix.get(x, y)) {
+					pixels[y * width + x] = BLACK;
+					if (maxX<x){maxX=x;}
+					if (maxY<y){maxY=y;}
+					if (minX>x){minX=x;}
+					if (minY>y){minY=y;}
+				}else {
+					pixels[y * width + x] = WITHE;
+				}
+			}
+		}
+		if (minX<padding){
+			throw new Exception("the (padding="+padding + ") is too big!! Must smaller than "+minX);
+		}
+		Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+		bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+		return clip(bitmap,widthAndHeight,padding);
+	}
+
+	private static Bitmap clip(Bitmap src , int widthAndHeight,int padding){
+		Bitmap out = Bitmap.createBitmap(src.getWidth(), src.getHeight(), Bitmap.Config.ARGB_8888);
+		Canvas  canvas = new Canvas(out);
+		canvas.save();
+		canvas.clipRect(padding,padding,widthAndHeight-padding,widthAndHeight-padding);
+		canvas.drawBitmap(src,0,0,null);
+		canvas.restore();
+		src.recycle();
+		return out;
 	}
 
 }

@@ -55,8 +55,13 @@ public class AboutActivity extends BaseActivity {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.k);
         iamge1.setImageBitmap(EncodingHandler.createQRCode(Constant.URL_HOME, 500, 500, bitmap));
         try {
-            iamge2.setImageBitmap(EncodingHandler.createQRCode(Constant.URL_BOLG, 500));
+            /**
+             *修改二维码的空白距离
+             */
+            iamge2.setImageBitmap(EncodingHandler.createQRCode(Constant.URL_BOLG, 500,50));
         } catch (WriterException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         tvUrl.setText(Constant.URL_HOME);
