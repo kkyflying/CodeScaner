@@ -18,7 +18,10 @@ git clone https://github.com/kkyflying/CodeScaner.git
 ## 如何使用
  创建二维码
 ```
+//默认的二维码的空白边距
  iamge.setImageBitmap(EncodingHandler.createQRCode(url,500));
+ //可以控制二维码的空白边距，第三个参数可以调整边距的大小
+ iamge.setImageBitmap(EncodingHandler.createQRCode(url, 500,50));
 ```
 创建有logo的二维码
 ```
