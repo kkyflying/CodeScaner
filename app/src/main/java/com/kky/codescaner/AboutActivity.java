@@ -7,17 +7,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.zxing.WriterException;
 import com.google.zxing.encoding.EncodingHandler;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import com.kky.codescaner.databinding.ActivityAboutBinding;
 
 /**
  * @author kky
@@ -25,18 +20,7 @@ import butterknife.OnClick;
  */
 public class AboutActivity extends BaseActivity {
 
-    @BindView(R.id.iamge1)
-    ImageView iamge1;
-    @BindView(R.id.iamge2)
-    ImageView iamge2;
-    @BindView(R.id.tvUrl)
-    TextView tvUrl;
-    @BindView(R.id.btnOpen)
-    Button btnOpen;
-    @BindView(R.id.btnShare)
-    Button btnShare;
-    @BindView(R.id.tvVersion)
-    TextView tvVersion;
+    private ActivityAboutBinding binding;
 
     private ClipboardManager mClipboardManager;
 
@@ -44,8 +28,8 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-        ButterKnife.bind(this);
+        binding = ActivityAboutBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         init();
     }
 
@@ -53,35 +37,45 @@ public class AboutActivity extends BaseActivity {
         mClipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.k);
-        iamge1.setImageBitmap(EncodingHandler.createQRCode(Constant.URL_HOME, 500, 500, bitmap));
+        binding.iamge1.setImageBitmap(EncodingHandler.createQRCode(Constant.URL_HOME, 500, 500, bitmap));
         try {
             /**
              *修改二维码的空白距离
              */
-            iamge2.setImageBitmap(EncodingHandler.createQRCode(Constant.URL_BOLG, 500,50));
+            binding.iamge2.setImageBitmap(EncodingHandler.createQRCode(Constant.URL_BOLG, 500, 50));
         } catch (WriterException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        tvUrl.setText(Constant.URL_HOME);
-        tvVersion.setText("版本号 : " + BuildConfig.VERSION_NAME);
+        binding.tvUrl.setText(Constant.URL_HOME);
+        binding.tvVersion.setText("版本号 : " + BuildConfig.VERSION_NAME);
+
+        //打开项目主页
+        binding.btnOpen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                github();
+            }
+        });
+
+        //复制项目主页地址
+        binding.btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipData clipData = ClipData.newPlainText("code", Constant.URL_HOME);
+                mClipboardManager.setPrimaryClip(clipData);
+                Toast.makeText(AboutActivity.this, "复制到粘贴板~ ", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    @OnClick(R.id.btnOpen)
-    public void github() {
+    private void github() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setAction("android.intent.action.VIEW");
         intent.setData(Uri.parse(Constant.URL_HOME));
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
         startActivity(Intent.createChooser(intent, "请选择浏览器"));
-    }
-
-    @OnClick(R.id.btnShare)
-    public void onViewClickedCopy() {
-        ClipData clipData = ClipData.newPlainText("code", Constant.URL_HOME);
-        mClipboardManager.setPrimaryClip(clipData);
-        Toast.makeText(this, "复制到粘贴板~ ", Toast.LENGTH_SHORT).show();
     }
 
 }

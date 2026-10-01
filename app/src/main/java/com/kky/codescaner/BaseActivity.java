@@ -1,6 +1,6 @@
 package com.kky.codescaner;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * @author kky

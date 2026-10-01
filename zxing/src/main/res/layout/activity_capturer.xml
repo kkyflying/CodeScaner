@@ -36,7 +36,7 @@
         app:result_color="@color/result_view"
         app:result_point_color="@color/possible_result_points" />
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -53,6 +53,6 @@
             android:text="扫一扫"
             android:textColor="@android:color/white"
             android:textSize="17dp" />
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
 </merge>

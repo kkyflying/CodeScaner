@@ -1,21 +1,16 @@
 package com.kky.codescaner;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.google.zxing.WriterException;
 import com.google.zxing.encoding.EncodingHandler;
+import com.kky.codescaner.databinding.ActivityCreateQrcodeBinding;
 
 import java.io.UnsupportedEncodingException;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * @author :  kky
@@ -25,41 +20,29 @@ public class CreateQrcodeActivity extends BaseActivity {
 
     private static final String TAG = CreateQrcodeActivity.class.getSimpleName();
 
-    @BindView(R.id.input)
-    EditText input;
-    @BindView(R.id.btnCreate)
-    Button btnCreate;
-    @BindView(R.id.imgQrcode)
-    ImageView imgQrcode;
-
-    private Unbinder unbinder;
+    private ActivityCreateQrcodeBinding binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_qrcode);
-        unbinder = ButterKnife.bind(this);
-    }
+        binding = ActivityCreateQrcodeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
-
-
-    @OnClick(R.id.btnCreate)
-    public void onViewClicked() {
-        String in = input.getText().toString();
-        if (!TextUtils.isEmpty(in)){
-            try {
-                String contents = new String(in.getBytes("UTF-8"), "ISO-8859-1");
-                imgQrcode.setImageBitmap(EncodingHandler.createQRCode(contents, 500));
-            } catch (WriterException | UnsupportedEncodingException e) {
-                e.printStackTrace();
+        //根据输入内容生成二维码
+        binding.btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String in = binding.input.getText().toString();
+                if (!TextUtils.isEmpty(in)) {
+                    try {
+                        String contents = new String(in.getBytes("UTF-8"), "ISO-8859-1");
+                        binding.imgQrcode.setImageBitmap(EncodingHandler.createQRCode(contents, 500));
+                    } catch (WriterException | UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        }
+        });
     }
 
 }
