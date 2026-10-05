@@ -1,9 +1,27 @@
 # CodeScaner
 
 ## 介绍
--  这是一个基于[zxing](https://github.com/zxing/zxing) 3.3.0修改后集成的库,除去一些没有使用上的文件,使这个库轻量易用.
+-  这是一个基于[zxing](https://github.com/zxing/zxing)修改后集成的库,除去一些没有使用上的文件,使这个库轻量易用.当前依赖 zxing core [3.5.4](https://github.com/zxing/zxing/releases/tag/zxing-3.5.4).
 - 实现Android的扫码和创建二维码的功能.
 - 实现扫描条形码
+## 环境要求
+本项目于 2026-10 完成工具链升级，构建环境要求如下：
+
+| 项目 | 要求 |
+| --- | --- |
+| JDK | 21 |
+| Gradle | 9.8.0（项目自带 wrapper，无需单独安装） |
+| Android Gradle Plugin | 9.4.1 |
+| Android Studio | 需支持 AGP 9.4（Quail 4 / 2026.1.4 及以上） |
+| compileSdk / targetSdk | 37 |
+| minSdk（最低支持系统） | 23（Android 6.0） |
+
+使用 Gradle wrapper 直接构建：
+```
+./gradlew assembleDebug   # 构建调试版 APK
+./gradlew build           # 完整构建（含单元测试和 Lint）
+```
+
 ## 下载使用
 
 1. [下载apk](https://github.com/kkyflying/CodeScaner/releases) 
