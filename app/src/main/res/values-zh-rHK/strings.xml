@@ -1,0 +1,21 @@
+<resources>
+    <!-- 关于页按钮 -->
+    <string name="open">開啟</string>
+    <string name="share">分享</string>
+
+    <!-- 主页 -->
+    <string name="main_btn_create_qrcode">建立QR碼</string>
+    <string name="main_btn_scan">掃描</string>
+    <string name="main_btn_copy">複製</string>
+    <string name="main_copy_success">已複製</string>
+    <string name="main_permission_denied">權限被拒絕</string>
+    <string name="menu_about">關於</string>
+
+    <!-- 生成二维码页 -->
+    <string name="create_btn_generate">生成</string>
+
+    <!-- 关于页 -->
+    <string name="about_version">版本號：%1$s</string>
+    <string name="about_copy_success">已複製到剪貼板</string>
+    <string name="about_choose_browser">請選擇瀏覽器</string>
+</resources>

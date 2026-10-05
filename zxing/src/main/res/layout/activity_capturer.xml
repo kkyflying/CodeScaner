@@ -50,7 +50,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="扫一扫"
+            android:text="@string/zxing_capture_title"
             android:textColor="@android:color/white"
             android:textSize="17dp" />
     </androidx.appcompat.widget.Toolbar>

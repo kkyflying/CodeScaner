@@ -16,7 +16,7 @@
         />
 
     <Button
-        android:text="create"
+        android:text="@string/create_btn_generate"
         android:id="@+id/btnCreate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

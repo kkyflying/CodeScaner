@@ -294,7 +294,7 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
         String resultString = rawResult.getText();
         //FIXME
         if (TextUtils.isEmpty(resultString)) {
-            Toast.makeText(CaptureActivity.this, "扫描二维码失败了", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CaptureActivity.this, R.string.zxing_scan_failed, Toast.LENGTH_SHORT).show();
         } else {
             Intent resultIntent = new Intent();
             Bundle bundle = new Bundle();
@@ -394,9 +394,9 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
 
     private void displayFrameworkBugMessageAndExit() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.app_name));
-        builder.setMessage("初始化摄像头出错了");
-        builder.setPositiveButton("知道了", new FinishListener(this));
+        builder.setTitle(getString(R.string.zxing_dialog_title));
+        builder.setMessage(getString(R.string.zxing_camera_error));
+        builder.setPositiveButton(getString(R.string.zxing_dialog_ok), new FinishListener(this));
         builder.setOnCancelListener(new FinishListener(this));
         builder.show();
     }

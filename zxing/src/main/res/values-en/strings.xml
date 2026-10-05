@@ -1,0 +1,11 @@
+<resources>
+    <!-- 扫码页标题与提示 -->
+    <string name="zxing_capture_title">Scan</string>
+    <string name="scan_qrcode_tips">Place the QR code inside the frame to scan automatically</string>
+
+    <!-- 扫码结果与异常提示 -->
+    <string name="zxing_scan_failed">Failed to scan the code</string>
+    <string name="zxing_camera_error">Failed to initialize the camera</string>
+    <string name="zxing_dialog_title">Notice</string>
+    <string name="zxing_dialog_ok">OK</string>
+</resources>

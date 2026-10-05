@@ -1,0 +1,21 @@
+<resources>
+    <!-- 关于页按钮 -->
+    <string name="open">열기</string>
+    <string name="share">공유</string>
+
+    <!-- 主页 -->
+    <string name="main_btn_create_qrcode">QR 코드 만들기</string>
+    <string name="main_btn_scan">스캔</string>
+    <string name="main_btn_copy">복사</string>
+    <string name="main_copy_success">복사되었습니다</string>
+    <string name="main_permission_denied">권한이 거부되었습니다</string>
+    <string name="menu_about">정보</string>
+
+    <!-- 生成二维码页 -->
+    <string name="create_btn_generate">생성</string>
+
+    <!-- 关于页 -->
+    <string name="about_version">버전: %1$s</string>
+    <string name="about_copy_success">클립보드에 복사되었습니다</string>
+    <string name="about_choose_browser">브라우저 선택</string>
+</resources>

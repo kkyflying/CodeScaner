@@ -62,7 +62,7 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 ClipData clipData = ClipData.newPlainText("code", binding.tvReuslt.getText());
                 mClipboardManager.setPrimaryClip(clipData);
-                Toast.makeText(MainActivity.this, "copy ~ ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.main_copy_success, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity {
                 startActivityForResult(new Intent(MainActivity.this, CaptureActivity.class), Constant.REQ_QRCODE);
             } else {
                 // Permission Denied
-                Toast.makeText(MainActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.main_permission_denied, Toast.LENGTH_SHORT).show();
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

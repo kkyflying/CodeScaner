@@ -1,0 +1,11 @@
+<resources>
+    <!-- 扫码页标题与提示 -->
+    <string name="zxing_capture_title">スキャン</string>
+    <string name="scan_qrcode_tips">QRコードを枠内に合わせると自動的にスキャンします</string>
+
+    <!-- 扫码结果与异常提示 -->
+    <string name="zxing_scan_failed">スキャンに失敗しました</string>
+    <string name="zxing_camera_error">カメラの初期化に失敗しました</string>
+    <string name="zxing_dialog_title">お知らせ</string>
+    <string name="zxing_dialog_ok">OK</string>
+</resources>

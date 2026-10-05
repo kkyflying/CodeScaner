@@ -49,7 +49,7 @@ public class AboutActivity extends BaseActivity {
             e.printStackTrace();
         }
         binding.tvUrl.setText(Constant.URL_HOME);
-        binding.tvVersion.setText("版本号 : " + BuildConfig.VERSION_NAME);
+        binding.tvVersion.setText(getString(R.string.about_version, BuildConfig.VERSION_NAME));
 
         //打开项目主页
         binding.btnOpen.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class AboutActivity extends BaseActivity {
             public void onClick(View v) {
                 ClipData clipData = ClipData.newPlainText("code", Constant.URL_HOME);
                 mClipboardManager.setPrimaryClip(clipData);
-                Toast.makeText(AboutActivity.this, "复制到粘贴板~ ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AboutActivity.this, R.string.about_copy_success, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -75,7 +75,7 @@ public class AboutActivity extends BaseActivity {
         intent.setAction("android.intent.action.VIEW");
         intent.setData(Uri.parse(Constant.URL_HOME));
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        startActivity(Intent.createChooser(intent, "请选择浏览器"));
+        startActivity(Intent.createChooser(intent, getString(R.string.about_choose_browser)));
     }
 
 }

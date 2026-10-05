@@ -1,6 +1,23 @@
 <resources>
-    <string name="app_name">CodeScaner</string>
+    <string name="app_name" translatable="false">CodeScaner</string>
 
+    <!-- 关于页按钮 -->
     <string name="open">打开</string>
     <string name="share">分享</string>
+
+    <!-- 主页 -->
+    <string name="main_btn_create_qrcode">创建二维码</string>
+    <string name="main_btn_scan">扫一扫</string>
+    <string name="main_btn_copy">复制</string>
+    <string name="main_copy_success">已复制</string>
+    <string name="main_permission_denied">权限被拒绝</string>
+    <string name="menu_about">关于</string>
+
+    <!-- 生成二维码页 -->
+    <string name="create_btn_generate">生成二维码</string>
+
+    <!-- 关于页 -->
+    <string name="about_version">版本号：%1$s</string>
+    <string name="about_copy_success">已复制到剪贴板</string>
+    <string name="about_choose_browser">请选择浏览器</string>
 </resources>

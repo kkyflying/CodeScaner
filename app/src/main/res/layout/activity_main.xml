@@ -18,7 +18,7 @@
         />
 
     <Button
-        android:text="create qrcode"
+        android:text="@string/main_btn_create_qrcode"
         android:id="@+id/btnCreateQrcode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
 
     <Button
         android:id="@+id/btnScaner"
-        android:text="scaner"
+        android:text="@string/main_btn_scan"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/btnCreateQrcode"
@@ -50,7 +50,7 @@
 
     <Button
         android:visibility="gone"
-        android:text="copy"
+        android:text="@string/main_btn_copy"
         android:id="@+id/btnCopy"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

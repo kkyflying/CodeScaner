@@ -1,0 +1,21 @@
+<resources>
+    <!-- 关于页按钮 -->
+    <string name="open">開く</string>
+    <string name="share">共有</string>
+
+    <!-- 主页 -->
+    <string name="main_btn_create_qrcode">QRコードを作成</string>
+    <string name="main_btn_scan">スキャン</string>
+    <string name="main_btn_copy">コピー</string>
+    <string name="main_copy_success">コピーしました</string>
+    <string name="main_permission_denied">権限が拒否されました</string>
+    <string name="menu_about">このアプリについて</string>
+
+    <!-- 生成二维码页 -->
+    <string name="create_btn_generate">作成</string>
+
+    <!-- 关于页 -->
+    <string name="about_version">バージョン：%1$s</string>
+    <string name="about_copy_success">クリップボードにコピーしました</string>
+    <string name="about_choose_browser">ブラウザを選択</string>
+</resources>

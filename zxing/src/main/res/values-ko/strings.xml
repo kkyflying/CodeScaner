@@ -1,0 +1,11 @@
+<resources>
+    <!-- 扫码页标题与提示 -->
+    <string name="zxing_capture_title">스캔</string>
+    <string name="scan_qrcode_tips">QR 코드를 프레임 안에 맞추면 자동으로 스캔됩니다</string>
+
+    <!-- 扫码结果与异常提示 -->
+    <string name="zxing_scan_failed">스캔에 실패했습니다</string>
+    <string name="zxing_camera_error">카메라 초기화에 실패했습니다</string>
+    <string name="zxing_dialog_title">알림</string>
+    <string name="zxing_dialog_ok">확인</string>
+</resources>

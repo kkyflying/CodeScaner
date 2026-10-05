@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="about"
+        android:title="@string/menu_about"
         android:id="@+id/about"
         android:orderInCategory="0"
         app:showAsAction="never"

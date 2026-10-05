@@ -1,4 +1,13 @@
 <resources>
-    <string name="app_name">zxing</string>
+    <string name="app_name" translatable="false">zxing</string>
+
+    <!-- 扫码页标题与提示 -->
+    <string name="zxing_capture_title">扫一扫</string>
     <string name="scan_qrcode_tips">请将二维码放入框内，即可自动扫描</string>
+
+    <!-- 扫码结果与异常提示 -->
+    <string name="zxing_scan_failed">扫描二维码失败了</string>
+    <string name="zxing_camera_error">初始化摄像头出错了</string>
+    <string name="zxing_dialog_title">提示</string>
+    <string name="zxing_dialog_ok">知道了</string>
 </resources>
