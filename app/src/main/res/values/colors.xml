@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#FF5252</color>
     <color name="colorAccent">#FF5252</color>
 
+       <!-- 页面统一背景：浅灰 -->
+    <color name="page_bg">#FFF5F5F5</color>
+
 </resources>

@@ -27,6 +27,7 @@ public class CreateQrcodeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateQrcodeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setUpToolbar(binding.toolbar, R.string.main_btn_create_qrcode);
 
         //根据输入内容生成二维码
         binding.btnCreate.setOnClickListener(new View.OnClickListener() {

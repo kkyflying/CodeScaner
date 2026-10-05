@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FF5252</color>
+    <color name="colorPrimaryDark">#FF5252</color>
+    <color name="colorAccent">#FF5252</color>
     <color name="white">#ffffff</color>
     <!-- QRCode scanner color begin -->
     <color name="result_view">#b0000000</color>
@@ -12,7 +14,6 @@
     <color name="corner_color">#ffffff</color>
     <color name="button_blue_text">#154a86</color>
     <!-- QRCode scanner color end -->
-    <color name="darker_gray">#aaa</color>
 
     <!-- 手电筒按钮 -->
     <color name="zxing_torch_tint">#FFFFFF</color>
@@ -22,4 +23,7 @@
     <color name="zxing_focus_indicator">#FFFFFF</color>
     <color name="zxing_focus_indicator_fail">#FF5252</color>
 
+     <!-- 页面统一背景：浅灰 -->
+    <color name="page_bg">#FFF5F5F5</color>
+    
 </resources>

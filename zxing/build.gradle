@@ -17,6 +17,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    testOptions {
+        unitTests {
+            // Robolectric 需要读取 android 资源与真实实现
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -34,6 +41,8 @@ dependencies {
     implementation 'androidx.camera:camera-view:1.5.1'
 
     testImplementation 'junit:junit:4.13.2'
+    // Robolectric：纯 JVM 单测使用 android.*（Rect 等）的真实实现
+    testImplementation 'org.robolectric:robolectric:4.14.1'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }

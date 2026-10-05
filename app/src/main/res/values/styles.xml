@@ -13,6 +13,9 @@
         <!--取消英文默认大小-->
         <item name="android:textAllCaps">false</item>
 
+        <!-- 全局统一页面背景：浅灰 -->
+        <item name="android:windowBackground">@color/page_bg</item>
+
     </style>
 
     <style name="ToolbarPopupTheme" parent="Widget.AppCompat.Light.PopupMenu.Overflow">

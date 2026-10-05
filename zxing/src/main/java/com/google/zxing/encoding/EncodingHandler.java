@@ -21,7 +21,7 @@ import java.util.Map;
 public final class EncodingHandler {
 
 	private static final int BLACK = 0xff000000;
-	private static final int WITHE = 0xffffffff;
+	private static final int WHITE = 0xffffffff;
 
 	public static Bitmap createQRCode(String str,int widthAndHeight) throws WriterException {
 		Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
@@ -72,7 +72,7 @@ public final class EncodingHandler {
 					if (bitMatrix.get(x, y)) {
 						pixels[y * widthPix + x] = BLACK;
 					} else {
-						pixels[y * widthPix + x] = WITHE;
+						pixels[y * widthPix + x] = WHITE;
 					}
 				}
 			}
@@ -152,7 +152,7 @@ public final class EncodingHandler {
 					if (minX>x){minX=x;}
 					if (minY>y){minY=y;}
 				}else {
-					pixels[y * width + x] = WITHE;
+					pixels[y * width + x] = WHITE;
 				}
 			}
 		}

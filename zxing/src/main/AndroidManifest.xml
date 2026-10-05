@@ -5,8 +5,7 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-    <application android:allowBackup="false" android:label="@string/app_name"
-        android:supportsRtl="true">
+    <application>
 
         <activity android:name="com.google.zxing.activity.CaptureActivity"
             android:exported="false"

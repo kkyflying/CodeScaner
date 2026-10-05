@@ -4,9 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/darker_gray"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:popupTheme="@style/ToolbarPopupTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@android:color/white"
+        android:background="@color/colorAccent"
+        />
 
     <TextView
         android:paddingTop="20dp"
@@ -14,7 +22,7 @@
         android:id="@+id/tvVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         android:textSize="20sp"
         />

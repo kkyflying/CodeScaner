@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">zxing</string>
 
     <!-- 扫码页标题与提示 -->
     <string name="zxing_capture_title">扫一扫</string>

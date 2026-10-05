@@ -34,6 +34,7 @@ public class AboutActivity extends BaseActivity {
     }
 
     private void init() {
+        setUpToolbar(binding.toolbar, R.string.menu_about);
         mClipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.k);

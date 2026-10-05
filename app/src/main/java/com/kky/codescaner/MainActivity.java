@@ -27,6 +27,9 @@ public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    /** 相机权限请求码 */
+    private static final int REQUEST_CAMERA = 1;
+
     private ActivityMainBinding binding;
 
     private ClipboardManager mClipboardManager;
@@ -38,12 +41,12 @@ public class MainActivity extends BaseActivity {
                 if (result.getResultCode() == RESULT_OK && data != null) {
                     byte[] resultBytes = data.getByteArrayExtra(CaptureActivity.KEY_RESULT);
                     if (resultBytes != null && resultBytes.length > 0) {
-                        binding.tvReuslt.setText(new String(resultBytes, StandardCharsets.UTF_8));
+                        binding.tvResult.setText(new String(resultBytes, StandardCharsets.UTF_8));
                         binding.btnCopy.setVisibility(View.VISIBLE);
                         return;
                     }
                 }
-                binding.tvReuslt.setText("");
+                binding.tvResult.setText("");
                 binding.btnCopy.setVisibility(View.GONE);
             });
 
@@ -57,7 +60,7 @@ public class MainActivity extends BaseActivity {
 
     private void init() {
         mClipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        binding.toolbar.inflateMenu(R.menu.activity_main_meun);
+        //菜单统一由 onCreateOptionsMenu() inflate，这里不再重复 inflateMenu
         setSupportActionBar(binding.toolbar);
         binding.toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
 
@@ -80,7 +83,7 @@ public class MainActivity extends BaseActivity {
         binding.btnCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClipData clipData = ClipData.newPlainText("code", binding.tvReuslt.getText());
+                ClipData clipData = ClipData.newPlainText("code", binding.tvResult.getText());
                 mClipboardManager.setPrimaryClip(clipData);
                 Toast.makeText(MainActivity.this, R.string.main_copy_success, Toast.LENGTH_SHORT).show();
             }
@@ -88,10 +91,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void getPermission() {
-        //第二个参数是需要申请的权限
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             //权限还没有授予，需要在这里写申请权限的代码
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 2);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
         } else {
             //权限已经被授予，在这里直接写要执行的相应方法即可
             scanLauncher.launch(new Intent(MainActivity.this, CaptureActivity.class));
@@ -100,7 +102,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 2) {
+        if (requestCode == REQUEST_CAMERA) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 scanLauncher.launch(new Intent(MainActivity.this, CaptureActivity.class));
             } else {
