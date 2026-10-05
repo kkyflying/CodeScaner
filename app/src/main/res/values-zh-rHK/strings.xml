@@ -5,7 +5,9 @@
 
     <!-- 主页 -->
     <string name="main_btn_create_qrcode">建立QR碼</string>
+    <string name="main_btn_gallery">從相簿識別</string>
     <string name="main_btn_scan">掃描</string>
+    <string name="main_recognize_failed">未識別到二維碼或條碼</string>
     <string name="main_btn_copy">複製</string>
     <string name="main_copy_success">已複製</string>
     <string name="main_permission_denied">權限被拒絕</string>

@@ -5,7 +5,9 @@
 
     <!-- 主页 -->
     <string name="main_btn_create_qrcode">Create QR Code</string>
+    <string name="main_btn_gallery">Scan from Gallery</string>
     <string name="main_btn_scan">Scan</string>
+    <string name="main_recognize_failed">No barcode found in the image</string>
     <string name="main_btn_copy">Copy</string>
     <string name="main_copy_success">Copied</string>
     <string name="main_permission_denied">Permission denied</string>

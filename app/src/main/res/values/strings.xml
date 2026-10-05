@@ -7,7 +7,9 @@
 
     <!-- 主页 -->
     <string name="main_btn_create_qrcode">创建二维码</string>
+    <string name="main_btn_gallery">相册识别</string>
     <string name="main_btn_scan">扫一扫</string>
+    <string name="main_recognize_failed">未识别到二维码或条形码</string>
     <string name="main_btn_copy">复制</string>
     <string name="main_copy_success">已复制</string>
     <string name="main_permission_denied">权限被拒绝</string>

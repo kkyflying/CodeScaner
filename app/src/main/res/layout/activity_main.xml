@@ -28,11 +28,21 @@
         />
 
     <Button
+        android:id="@+id/btnGallery"
+        android:text="@string/main_btn_gallery"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btnCreateQrcode"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <Button
         android:id="@+id/btnScaner"
         android:text="@string/main_btn_scan"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/btnCreateQrcode"
+        app:layout_constraintTop_toBottomOf="@id/btnGallery"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         />

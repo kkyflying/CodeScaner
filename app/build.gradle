@@ -34,6 +34,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.2'
     implementation project(':zxing')
+    // 相册图片 EXIF 方向读取（识别前摆正图片）
+    implementation 'androidx.exifinterface:exifinterface:1.4.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'

@@ -5,7 +5,12 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,11 +22,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.exifinterface.media.ExifInterface;
 
+import com.google.zxing.Result;
 import com.google.zxing.activity.CaptureActivity;
+import com.google.zxing.decoding.DecodingHandler;
 import com.kky.codescaner.databinding.ActivityMainBinding;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends BaseActivity {
 
@@ -30,9 +42,23 @@ public class MainActivity extends BaseActivity {
     /** 相机权限请求码 */
     private static final int REQUEST_CAMERA = 1;
 
+    /** 相册识别降采样的目标最长边（px） */
+    private static final int MAX_DECODE_EDGE = 1600;
+
     private ActivityMainBinding binding;
 
     private ClipboardManager mClipboardManager;
+
+    //相册识别专用后台线程（图片解码与识别不能在主线程执行）
+    private final ExecutorService decodeExecutor = Executors.newSingleThreadExecutor();
+
+    //系统相册选图（GetContent + image/*，Android 13+ 由系统 Photo Picker 呈现）
+    private final ActivityResultLauncher<String> galleryLauncher =
+            registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+                if (uri != null) {
+                    recognizeFromGallery(uri);
+                }
+            });
 
     //扫码结果回调（Activity Result API，替代已废弃的 startActivityForResult/onActivityResult）
     private final ActivityResultLauncher<Intent> scanLauncher =
@@ -79,6 +105,14 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        //从相册选图识别
+        binding.btnGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                galleryLauncher.launch("image/*");
+            }
+        });
+
         //复制扫描结果
         binding.btnCopy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +145,103 @@ public class MainActivity extends BaseActivity {
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    //相册图片识别：后台加载（降采样 + EXIF 摆正）→ 解码 → 主线程展示结果
+    private void recognizeFromGallery(Uri uri) {
+        decodeExecutor.execute(() -> {
+            Bitmap bitmap = loadUprightBitmap(uri, MAX_DECODE_EDGE);
+            String text = null;
+            if (bitmap != null) {
+                Result result = DecodingHandler.decodeFromBitmap(bitmap);
+                bitmap.recycle();
+                if (result != null) {
+                    text = result.getText();
+                }
+            }
+            String decoded = text;
+            runOnUiThread(() -> {
+                if (!TextUtils.isEmpty(decoded)) {
+                    binding.tvResult.setText(decoded);
+                    binding.btnCopy.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.main_recognize_failed, Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+    }
+
+    /** 加载图片并按 EXIF 方向摆正，最长边降采样到 maxEdge 附近 */
+    private Bitmap loadUprightBitmap(Uri uri, int maxEdge) {
+        try (InputStream in = getContentResolver().openInputStream(uri)) {
+            BitmapFactory.Options opts = new BitmapFactory.Options();
+            opts.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(in, null, opts);
+            opts.inSampleSize = computeInSampleSize(opts.outWidth, opts.outHeight, maxEdge);
+            opts.inJustDecodeBounds = false;
+            Bitmap bitmap;
+            try (InputStream decodeIn = getContentResolver().openInputStream(uri)) {
+                bitmap = BitmapFactory.decodeStream(decodeIn, null, opts);
+            }
+            if (bitmap == null) {
+                return null;
+            }
+            int degrees = readExifRotation(uri);
+            if (degrees != 0) {
+                Matrix matrix = new Matrix();
+                matrix.postRotate(degrees);
+                Bitmap rotated = Bitmap.createBitmap(bitmap, 0, 0,
+                        bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+                bitmap.recycle();
+                bitmap = rotated;
+            }
+            return bitmap;
+        } catch (IOException | OutOfMemoryError e) {
+            return null;
+        }
+    }
+
+    /** 读取图片 EXIF 旋转角（相册竖拍照片通常带 90°） */
+    private int readExifRotation(Uri uri) {
+        try (InputStream in = getContentResolver().openInputStream(uri)) {
+            if (in == null) {
+                return 0;
+            }
+            ExifInterface exif = new ExifInterface(in);
+            int orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    return 90;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    return 180;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    return 270;
+                default:
+                    return 0;
+            }
+        } catch (IOException e) {
+            return 0;
+        }
+    }
+
+    /** inSampleSize 算法：降采样后最长边落在 maxEdge/2 与 maxEdge*2 之间 */
+    private static int computeInSampleSize(int width, int height, int maxEdge) {
+        int inSampleSize = 1;
+        if (width > maxEdge || height > maxEdge) {
+            final int halfWidth = width / 2;
+            final int halfHeight = height / 2;
+            while ((halfWidth / inSampleSize) >= maxEdge / 2 && (halfHeight / inSampleSize) >= maxEdge / 2) {
+                inSampleSize *= 2;
+            }
+        }
+        return inSampleSize;
+    }
+
+    @Override
+    protected void onDestroy() {
+        decodeExecutor.shutdown();
+        super.onDestroy();
     }
 
     @Override

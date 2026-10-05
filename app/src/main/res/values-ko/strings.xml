@@ -5,7 +5,9 @@
 
     <!-- 主页 -->
     <string name="main_btn_create_qrcode">QR 코드 만들기</string>
+    <string name="main_btn_gallery">갤러리에서 인식</string>
     <string name="main_btn_scan">스캔</string>
+    <string name="main_recognize_failed">이미지에서 바코드를 인식하지 못했습니다</string>
     <string name="main_btn_copy">복사</string>
     <string name="main_copy_success">복사되었습니다</string>
     <string name="main_permission_denied">권한이 거부되었습니다</string>

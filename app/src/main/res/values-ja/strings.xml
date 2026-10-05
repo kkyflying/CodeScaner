@@ -5,7 +5,9 @@
 
     <!-- 主页 -->
     <string name="main_btn_create_qrcode">QRコードを作成</string>
+    <string name="main_btn_gallery">ギャラリーから読み取る</string>
     <string name="main_btn_scan">スキャン</string>
+    <string name="main_recognize_failed">画像からバーコードを認識できませんでした</string>
     <string name="main_btn_copy">コピー</string>
     <string name="main_copy_success">コピーしました</string>
     <string name="main_permission_denied">権限が拒否されました</string>
