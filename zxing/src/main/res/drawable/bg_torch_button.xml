@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 手电筒按钮背景：半透明黑圆底 + ripple 水波纹 -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#33FFFFFF">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/zxing_torch_button_bg" />
+        </shape>
+    </item>
+</ripple>

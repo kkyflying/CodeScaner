@@ -17,7 +17,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <SurfaceView
+    <androidx.camera.view.PreviewView
         android:id="@+id/preview_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -36,6 +36,19 @@
         app:result_color="@color/result_view"
         app:result_point_color="@color/possible_result_points" />
 
+    <!-- 手电筒开关：相机就绪且设备有闪光灯时才显示 -->
+    <ImageButton
+        android:id="@+id/torch_button"
+        android:layout_width="@dimen/zxing_torch_button_size"
+        android:layout_height="@dimen/zxing_torch_button_size"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="@dimen/zxing_torch_button_margin_bottom"
+        android:background="@drawable/bg_torch_button"
+        android:src="@drawable/ic_torch_selector"
+        app:tint="@color/zxing_torch_tint"
+        android:contentDescription="@string/zxing_torch_off"
+        android:visibility="gone" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -52,7 +65,7 @@
             android:gravity="center"
             android:text="@string/zxing_capture_title"
             android:textColor="@android:color/white"
-            android:textSize="17dp" />
+            android:textSize="17sp" />
     </androidx.appcompat.widget.Toolbar>
 
 </merge>

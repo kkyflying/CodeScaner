@@ -24,6 +24,15 @@ dependencies {
     api 'com.google.zxing:core:3.5.4'
     implementation 'androidx.appcompat:appcompat:1.8.0'
 
+    // CameraX：core 由其余三者传递引入，显式声明便于直接引用基础类型
+    implementation 'androidx.camera:camera-core:1.5.1'
+    // 底层实现（含 Camera2Interop）
+    implementation 'androidx.camera:camera-camera2:1.5.1'
+    // ProcessCameraProvider / bindToLifecycle
+    implementation 'androidx.camera:camera-lifecycle:1.5.1'
+    // PreviewView / MeteringPointFactory
+    implementation 'androidx.camera:camera-view:1.5.1'
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'

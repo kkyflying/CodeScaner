@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 手电筒图标状态切换：activated = 开启 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true" android:drawable="@drawable/ic_torch_on" />
+    <item android:drawable="@drawable/ic_torch_off" />
+</selector>

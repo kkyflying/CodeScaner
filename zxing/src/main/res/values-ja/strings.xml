@@ -8,4 +8,8 @@
     <string name="zxing_camera_error">カメラの初期化に失敗しました</string>
     <string name="zxing_dialog_title">お知らせ</string>
     <string name="zxing_dialog_ok">OK</string>
+
+    <!-- 手电筒 -->
+    <string name="zxing_torch_on">ライトをオフにする</string>
+    <string name="zxing_torch_off">ライトをオンにする</string>
 </resources>

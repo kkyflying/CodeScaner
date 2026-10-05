@@ -14,4 +14,12 @@
     <!-- QRCode scanner color end -->
     <color name="darker_gray">#aaa</color>
 
+    <!-- 手电筒按钮 -->
+    <color name="zxing_torch_tint">#FFFFFF</color>
+    <color name="zxing_torch_button_bg">#66000000</color>
+
+    <!-- 点击对焦指示器 -->
+    <color name="zxing_focus_indicator">#FFFFFF</color>
+    <color name="zxing_focus_indicator_fail">#FF5252</color>
+
 </resources>
