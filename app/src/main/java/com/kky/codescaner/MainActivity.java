@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -19,6 +21,8 @@ import androidx.core.content.ContextCompat;
 import com.google.zxing.activity.CaptureActivity;
 import com.kky.codescaner.databinding.ActivityMainBinding;
 
+import java.nio.charset.StandardCharsets;
+
 public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -26,6 +30,22 @@ public class MainActivity extends BaseActivity {
     private ActivityMainBinding binding;
 
     private ClipboardManager mClipboardManager;
+
+    //扫码结果回调（Activity Result API，替代已废弃的 startActivityForResult/onActivityResult）
+    private final ActivityResultLauncher<Intent> scanLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                Intent data = result.getData();
+                if (result.getResultCode() == RESULT_OK && data != null) {
+                    byte[] resultBytes = data.getByteArrayExtra(CaptureActivity.KEY_RESULT);
+                    if (resultBytes != null && resultBytes.length > 0) {
+                        binding.tvReuslt.setText(new String(resultBytes, StandardCharsets.UTF_8));
+                        binding.btnCopy.setVisibility(View.VISIBLE);
+                        return;
+                    }
+                }
+                binding.tvReuslt.setText("");
+                binding.btnCopy.setVisibility(View.GONE);
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +94,7 @@ public class MainActivity extends BaseActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 2);
         } else {
             //权限已经被授予，在这里直接写要执行的相应方法即可
-            startActivityForResult(new Intent(MainActivity.this, CaptureActivity.class), Constant.REQ_QRCODE);
+            scanLauncher.launch(new Intent(MainActivity.this, CaptureActivity.class));
         }
     }
 
@@ -82,32 +102,13 @@ public class MainActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 2) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startActivityForResult(new Intent(MainActivity.this, CaptureActivity.class), Constant.REQ_QRCODE);
+                scanLauncher.launch(new Intent(MainActivity.this, CaptureActivity.class));
             } else {
                 // Permission Denied
                 Toast.makeText(MainActivity.this, R.string.main_permission_denied, Toast.LENGTH_SHORT).show();
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == Constant.REQ_QRCODE && data != null) {
-            byte[] result = data.getByteArrayExtra(CaptureActivity.KEY_RESULT);
-            if (result == null || result.length == 0) {
-                binding.tvReuslt.setText("");
-                binding.btnCopy.setVisibility(View.GONE);
-                return;
-            }
-            String payCode = new String(result);
-            binding.tvReuslt.setText(payCode);
-            binding.btnCopy.setVisibility(View.VISIBLE);
-        } else {
-            binding.tvReuslt.setText("");
-            binding.btnCopy.setVisibility(View.GONE);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
