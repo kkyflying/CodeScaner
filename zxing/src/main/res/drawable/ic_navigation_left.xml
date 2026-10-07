@@ -1,9 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Toolbar 返回箭头：与 app 模块 ic_back 完全一致的 24dp Material 白色箭头 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="18dp"
-    android:height="18dp"
-    android:viewportHeight="1024.0"
-    android:viewportWidth="1024.0">
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
     <path
-        android:fillColor="@color/white"
-        android:pathData="M234.9,507 L252.7,524.8 740.4,1009.2 790.8,958.8 335.6,507 790.8,61.6 740.4,11.2 252.7,490.7 234.9,507 234.9,507Z" />
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M20,11H7.83l5.59,-5.59L12,4l-8,8 8,8 1.41,-1.41L7.83,13H20v-2z" />
 </vector>

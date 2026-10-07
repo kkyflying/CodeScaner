@@ -22,7 +22,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -81,7 +80,10 @@ public final class CaptureActivity extends AppCompatActivity {
         toolbar.setTitle(null);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
+        //返回箭头与处理方式同 app 模块 BaseActivity.setUpToolbar 保持一致
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_left);
+        toolbar.setNavigationOnClickListener(v -> finish());
         getSupportActionBar().setElevation(0);
 
         inactivityTimer = new InactivityTimer(this);
@@ -174,14 +176,6 @@ public final class CaptureActivity extends AppCompatActivity {
         if (cameraManager != null) {
             cameraManager.setTorch(!torchButton.isActivated());
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
