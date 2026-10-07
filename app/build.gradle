@@ -2,6 +2,15 @@ plugins {
     id 'com.android.application'
 }
 
+// 读取 local.properties 中的签名配置（该文件与 *.jks 均不入库，见 .gitignore）
+// 未配置时回退 debug 签名，保证克隆项目后仍可直接构建 release
+def localProps = new Properties()
+def localPropsFile = rootProject.file("local.properties")
+if (localPropsFile.exists()) {
+    localPropsFile.withInputStream { localProps.load(it) }
+}
+def keystoreFilePath = localProps.getProperty("keystore.file")
+
 android {
     namespace 'com.kky.codescaner'
     compileSdk 37
@@ -15,10 +24,23 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        if (keystoreFilePath != null) {
+            release {
+                storeFile rootProject.file(keystoreFilePath)
+                storePassword localProps.getProperty("keystore.storePassword")
+                keyAlias localProps.getProperty("keystore.keyAlias")
+                keyPassword localProps.getProperty("keystore.keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //正式签名（local.properties 配置）优先，未配置时回退 debug 签名
+            signingConfig keystoreFilePath != null ? signingConfigs.release : signingConfigs.debug
         }
     }
 
