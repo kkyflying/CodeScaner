@@ -16,6 +16,7 @@
     <!-- 生成二维码页 -->
     <string name="create_input_hint">Enter content</string>
     <string name="create_btn_generate">Generate</string>
+    <string name="create_pick_logo">Pick Logo</string>
     <string name="create_save">Save</string>
     <string name="create_save_success">Saved to gallery</string>
     <string name="create_save_failed">Failed to save</string>

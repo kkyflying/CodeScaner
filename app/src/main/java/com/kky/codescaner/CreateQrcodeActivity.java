@@ -20,6 +20,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -57,10 +59,24 @@ public class CreateQrcodeActivity extends BaseActivity {
     private static final int BARCODE_WIDTH = 600;
     private static final int BARCODE_HEIGHT = 300;
 
+    /** Logo 加载降采样的最长边（px，Logo 在码中仅占约 1/5，无需更高分辨率） */
+    private static final int LOGO_MAX_EDGE = 400;
+
     /** 保存到相册的子目录名 */
     private static final String GALLERY_DIR = "CodeScaner";
 
     private ActivityCreateQrcodeBinding binding;
+
+    //用户从相册选择的 Logo（null 表示未选择，带 Logo 行不生成）
+    private Bitmap selectedLogo;
+
+    //系统相册选 Logo 图
+    private final ActivityResultLauncher<String> pickLogoLauncher =
+            registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+                if (uri != null) {
+                    onLogoPicked(uri);
+                }
+            });
 
     //权限批准后待保存的图片（仅 API 23-28 权限流使用）
     private Bitmap pendingSaveBitmap;
@@ -87,6 +103,10 @@ public class CreateQrcodeActivity extends BaseActivity {
         binding.btnSaveBasic.setOnClickListener(v -> saveFromImageView(binding.imgBasic, "qrcode_basic"));
         binding.btnSavePadding.setOnClickListener(v -> saveFromImageView(binding.imgPadding, "qrcode_padding"));
         binding.btnSaveLogo.setOnClickListener(v -> saveFromImageView(binding.imgLogo, "qrcode_logo"));
+
+        //从相册选择 Logo，选完立即用当前内容重新生成带 Logo 版
+        binding.btnPickLogo.setOnClickListener(v ->
+                pickLogoLauncher.launch("image/*"));
 
         //进入页面自动聚焦输入框并弹出键盘，方便直接输入
         binding.input.post(() -> {
@@ -135,10 +155,54 @@ public class CreateQrcodeActivity extends BaseActivity {
             Log.w(TAG, "createQRCode padding failed", e);
             binding.rowPadding.setVisibility(View.GONE);
         }
-        //4. 带 Logo 二维码（生成方式参考 AboutActivity：H 级容错保证可扫）
-        Bitmap logo = BitmapFactory.decodeResource(getResources(), R.drawable.k);
-        binding.imgLogo.setImageBitmap(EncodingHandler.createQRCode(content, QR_SIZE, QR_SIZE, logo));
-        binding.rowLogo.setVisibility(View.VISIBLE);
+        //4. 带 Logo 二维码（Logo 由用户上传，未选择时不生成该行）
+        if (selectedLogo != null) {
+            Bitmap logo = selectedLogo;
+            binding.imgLogo.setImageBitmap(EncodingHandler.createQRCode(content, QR_SIZE, QR_SIZE, logo));
+            binding.rowLogo.setVisibility(View.VISIBLE);
+        } else {
+            binding.rowLogo.setVisibility(View.GONE);
+        }
+    }
+
+    /** Logo 选图回调：加载降采样图，若已输入内容则立即重新生成带 Logo 行 */
+    private void onLogoPicked(Uri uri) {
+        Bitmap logo = loadLogo(uri);
+        if (logo == null) {
+            Toast.makeText(this, R.string.create_save_failed, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        selectedLogo = logo;
+        //按钮右侧显示预览（与按钮同高）
+        binding.imgLogoPreview.setImageBitmap(logo);
+        binding.imgLogoPreview.setVisibility(View.VISIBLE);
+        String content = binding.input.getText().toString().trim();
+        if (!TextUtils.isEmpty(content)) {
+            binding.imgLogo.setImageBitmap(EncodingHandler.createQRCode(content, QR_SIZE, QR_SIZE, selectedLogo));
+            binding.rowLogo.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /** 加载 Logo 并降采样（最长边约 LOGO_MAX_EDGE） */
+    private Bitmap loadLogo(Uri uri) {
+        try (java.io.InputStream in = getContentResolver().openInputStream(uri)) {
+            BitmapFactory.Options opts = new BitmapFactory.Options();
+            opts.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(in, null, opts);
+            int sample = 1;
+            while (opts.outWidth / (sample * 2) >= LOGO_MAX_EDGE
+                    || opts.outHeight / (sample * 2) >= LOGO_MAX_EDGE) {
+                sample *= 2;
+            }
+            opts.inSampleSize = sample;
+            opts.inJustDecodeBounds = false;
+            try (java.io.InputStream decodeIn = getContentResolver().openInputStream(uri)) {
+                return BitmapFactory.decodeStream(decodeIn, null, opts);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "loadLogo failed", e);
+            return null;
+        }
     }
 
     /** 从 ImageView 提取生成图并保存到相册 */

@@ -16,6 +16,7 @@
     <!-- 生成二维码页 -->
     <string name="create_input_hint">내용 입력</string>
     <string name="create_btn_generate">생성</string>
+    <string name="create_pick_logo">로고 선택</string>
     <string name="create_save">저장</string>
     <string name="create_save_success">갤러리에 저장되었습니다</string>
     <string name="create_save_failed">저장에 실패했습니다</string>
