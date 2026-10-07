@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -76,6 +77,7 @@ public class CreateQrcodeActivity extends BaseActivity {
         binding.btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();
                 generateAll(binding.input.getText().toString().trim());
             }
         });
@@ -85,37 +87,58 @@ public class CreateQrcodeActivity extends BaseActivity {
         binding.btnSaveBasic.setOnClickListener(v -> saveFromImageView(binding.imgBasic, "qrcode_basic"));
         binding.btnSavePadding.setOnClickListener(v -> saveFromImageView(binding.imgPadding, "qrcode_padding"));
         binding.btnSaveLogo.setOnClickListener(v -> saveFromImageView(binding.imgLogo, "qrcode_logo"));
+
+        //进入页面自动聚焦输入框并弹出键盘，方便直接输入
+        binding.input.post(() -> {
+            binding.input.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.showSoftInput(binding.input, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+    }
+
+    /** 收起软键盘 */
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(binding.btnCreate.getWindowToken(), 0);
+        }
     }
 
     private void generateAll(String content) {
         if (TextUtils.isEmpty(content)) {
             return;
         }
-        //1. 一维码（CODE_128 仅支持拉丁字符，中文等内容会失败）
+        //1. 一维码（CODE_128 仅支持拉丁字符，中文等内容会失败；失败时该行保持隐藏）
         try {
             binding.imgBarcode.setImageBitmap(
                     EncodingHandler.createBarcode(content, BARCODE_WIDTH, BARCODE_HEIGHT));
+            binding.rowBarcode.setVisibility(View.VISIBLE);
         } catch (WriterException | IllegalArgumentException e) {
-            binding.imgBarcode.setImageBitmap(null);
+            binding.rowBarcode.setVisibility(View.GONE);
             Toast.makeText(this, R.string.create_barcode_unsupported, Toast.LENGTH_SHORT).show();
         }
         //2. 基础二维码
         try {
             binding.imgBasic.setImageBitmap(EncodingHandler.createQRCode(content, QR_SIZE));
+            binding.rowBasic.setVisibility(View.VISIBLE);
         } catch (WriterException e) {
             Log.w(TAG, "createQRCode basic failed", e);
-            binding.imgBasic.setImageBitmap(null);
+            binding.rowBasic.setVisibility(View.GONE);
         }
         //3. 自定义边距二维码（生成方式参考 AboutActivity）
         try {
             binding.imgPadding.setImageBitmap(EncodingHandler.createQRCode(content, QR_SIZE, QR_PADDING));
+            binding.rowPadding.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             Log.w(TAG, "createQRCode padding failed", e);
-            binding.imgPadding.setImageBitmap(null);
+            binding.rowPadding.setVisibility(View.GONE);
         }
         //4. 带 Logo 二维码（生成方式参考 AboutActivity：H 级容错保证可扫）
         Bitmap logo = BitmapFactory.decodeResource(getResources(), R.drawable.k);
         binding.imgLogo.setImageBitmap(EncodingHandler.createQRCode(content, QR_SIZE, QR_SIZE, logo));
+        binding.rowLogo.setVisibility(View.VISIBLE);
     }
 
     /** 从 ImageView 提取生成图并保存到相册 */

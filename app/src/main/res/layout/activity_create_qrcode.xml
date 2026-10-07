@@ -31,7 +31,10 @@
                 android:id="@+id/input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/create_input_hint" />
+                android:hint="@string/create_input_hint">
+
+                <requestFocus />
+            </EditText>
 
             <Button
                 android:id="@+id/btnCreate"
@@ -40,8 +43,10 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/create_btn_generate" />
 
-            <!-- 一维码行：码在左，标签与保存按钮在右 -->
+            <!-- 一维码行：码在左，标签与保存按钮在右（生成成功后才显示） -->
             <LinearLayout
+                android:id="@+id/rowBarcode"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -76,8 +81,10 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- 基础二维码行 -->
+            <!-- 基础二维码行（生成成功后才显示） -->
             <LinearLayout
+                android:id="@+id/rowBasic"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -112,8 +119,10 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- 自定义边距二维码行（生成方式参考 AboutActivity） -->
+            <!-- 自定义边距二维码行（生成方式参考 AboutActivity，生成成功后才显示） -->
             <LinearLayout
+                android:id="@+id/rowPadding"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -148,8 +157,10 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- 带 Logo 二维码行（生成方式参考 AboutActivity） -->
+            <!-- 带 Logo 二维码行（生成方式参考 AboutActivity，生成成功后才显示） -->
             <LinearLayout
+                android:id="@+id/rowLogo"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
