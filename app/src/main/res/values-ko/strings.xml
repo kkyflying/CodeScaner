@@ -14,7 +14,16 @@
     <string name="menu_about">정보</string>
 
     <!-- 生成二维码页 -->
+    <string name="create_input_hint">내용 입력</string>
     <string name="create_btn_generate">생성</string>
+    <string name="create_save">저장</string>
+    <string name="create_save_success">갤러리에 저장되었습니다</string>
+    <string name="create_save_failed">저장에 실패했습니다</string>
+    <string name="create_barcode_unsupported">바코드가 이 내용을 지원하지 않습니다(영문자만 가능)</string>
+    <string name="create_label_barcode">바코드</string>
+    <string name="create_label_basic">QR 코드 · 기본</string>
+    <string name="create_label_padding">QR 코드 · 여백 조정</string>
+    <string name="create_label_logo">QR 코드 · 로고</string>
 
     <!-- 关于页 -->
     <string name="about_version">버전: %1$s</string>

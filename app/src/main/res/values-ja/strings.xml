@@ -14,7 +14,16 @@
     <string name="menu_about">このアプリについて</string>
 
     <!-- 生成二维码页 -->
+    <string name="create_input_hint">内容を入力</string>
     <string name="create_btn_generate">作成</string>
+    <string name="create_save">保存</string>
+    <string name="create_save_success">ギャラリーに保存しました</string>
+    <string name="create_save_failed">保存に失敗しました</string>
+    <string name="create_barcode_unsupported">バーコードはこの内容に対応していません（英数字のみ）</string>
+    <string name="create_label_barcode">バーコード</string>
+    <string name="create_label_basic">QRコード・基本</string>
+    <string name="create_label_padding">QRコード・余白調整</string>
+    <string name="create_label_logo">QRコード・ロゴ付き</string>
 
     <!-- 关于页 -->
     <string name="about_version">バージョン：%1$s</string>

@@ -129,6 +129,46 @@ public final class EncodingHandler {
 	}
 
 	/**
+	 * 创建一维码（CODE_128）。
+	 * CODE_128 仅支持拉丁字符（不支持中文），编码失败抛出 {@link WriterException}。
+	 * 实际条码宽度由内容决定（可能小于请求宽度），绘制时居中到白底画布，
+	 * 画布两侧留白即条码静区（quiet zone）。
+	 *
+	 * @param content   内容（拉丁字符）
+	 * @param widthPix  期望宽（px）
+	 * @param heightPix 高（px）
+	 * @return 一维码图片
+	 */
+	public static Bitmap createBarcode(String content, int widthPix, int heightPix) throws WriterException {
+		Map<EncodeHintType, Object> hints = new HashMap<>();
+		hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+		// 白边由外层画布提供
+		hints.put(EncodeHintType.MARGIN, 0);
+		BitMatrix matrix = new MultiFormatWriter()
+				.encode(content, BarcodeFormat.CODE_128, widthPix, heightPix, hints);
+		int matrixWidth = matrix.getWidth();
+		int matrixHeight = matrix.getHeight();
+		int[] pixels = new int[matrixWidth * matrixHeight];
+		for (int y = 0; y < matrixHeight; y++) {
+			for (int x = 0; x < matrixWidth; x++) {
+				pixels[y * matrixWidth + x] = matrix.get(x, y) ? BLACK : WHITE;
+			}
+		}
+		Bitmap barcode = Bitmap.createBitmap(matrixWidth, matrixHeight, Bitmap.Config.ARGB_8888);
+		barcode.setPixels(pixels, 0, matrixWidth, 0, 0, matrixWidth, matrixHeight);
+		if (matrixWidth == widthPix && matrixHeight == heightPix) {
+			return barcode;
+		}
+		//居中绘制到目标尺寸的白底画布
+		Bitmap out = Bitmap.createBitmap(widthPix, heightPix, Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(out);
+		canvas.drawColor(WHITE);
+		canvas.drawBitmap(barcode, (widthPix - matrixWidth) / 2f, (heightPix - matrixHeight) / 2f, null);
+		barcode.recycle();
+		return out;
+	}
+
+	/**
 	 *
 	 */
 	public static Bitmap createQRCode(String str,int widthAndHeight,int padding) throws Exception {

@@ -14,7 +14,16 @@
     <string name="menu_about">關於</string>
 
     <!-- 生成二维码页 -->
+    <string name="create_input_hint">請輸入內容</string>
     <string name="create_btn_generate">生成</string>
+    <string name="create_save">保存</string>
+    <string name="create_save_success">已保存到相簿</string>
+    <string name="create_save_failed">保存失敗</string>
+    <string name="create_barcode_unsupported">一維條碼不支持此內容（僅拉丁字符）</string>
+    <string name="create_label_barcode">一維條碼</string>
+    <string name="create_label_basic">QR碼·基礎</string>
+    <string name="create_label_padding">QR碼·自訂邊距</string>
+    <string name="create_label_logo">QR碼·帶Logo</string>
 
     <!-- 关于页 -->
     <string name="about_version">版本號：%1$s</string>

@@ -14,7 +14,16 @@
     <string name="menu_about">About</string>
 
     <!-- 生成二维码页 -->
+    <string name="create_input_hint">Enter content</string>
     <string name="create_btn_generate">Generate</string>
+    <string name="create_save">Save</string>
+    <string name="create_save_success">Saved to gallery</string>
+    <string name="create_save_failed">Failed to save</string>
+    <string name="create_barcode_unsupported">Barcode does not support this content (Latin characters only)</string>
+    <string name="create_label_barcode">Barcode</string>
+    <string name="create_label_basic">QR Code · Basic</string>
+    <string name="create_label_padding">QR Code · Custom Margin</string>
+    <string name="create_label_logo">QR Code · Logo</string>
 
     <!-- 关于页 -->
     <string name="about_version">Version: %1$s</string>
